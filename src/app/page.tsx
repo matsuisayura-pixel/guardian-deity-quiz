@@ -1,65 +1,72 @@
-import Image from "next/image";
+import Link from 'next/link'
+import type { Metadata } from 'next'
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: '守護神様タイプ診断 | あなたを守る神様がわかる',
+  description: '8問に答えるだけ！あなたを守る守護神様のタイプがわかる無料診断。天照大御神・龍神・弁財天など8タイプから判定します。',
+  openGraph: {
+    title: '守護神様タイプ診断',
+    description: '8問に答えるだけ！あなたを守る守護神様のタイプがわかる無料診断。',
+  },
+}
+
+const TYPES = [
+  { emoji: '✨', name: '天照大御神' },
+  { emoji: '🌙', name: '月読命' },
+  { emoji: '⚡', name: '素戔嗚尊' },
+  { emoji: '🦊', name: '稲荷大神' },
+  { emoji: '🐉', name: '龍神' },
+  { emoji: '🪷', name: '弁財天' },
+  { emoji: '😊', name: '恵比寿様' },
+  { emoji: '🍀', name: '大国主命' },
+]
+
+export default function TopPage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-gradient-to-b from-indigo-950 via-purple-950 to-indigo-950 flex flex-col items-center justify-center px-4 py-12">
+      <div className="text-center mb-10">
+        <p className="text-purple-300 text-sm tracking-widest mb-3">✦ 無料診断 ✦</p>
+        <h1 className="text-white text-3xl font-bold leading-tight mb-4">
+          あなたの<br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-pink-300">
+            守護神様タイプ
+          </span>
+          <br />診断
+        </h1>
+        <p className="text-purple-200 text-base leading-relaxed">
+          8問に答えるだけで<br />
+          あなたを守る神様のタイプがわかります
+        </p>
+      </div>
+
+      <div className="w-full max-w-sm mb-8">
+        <div className="grid grid-cols-4 gap-2 text-center">
+          {TYPES.map(t => (
+            <div key={t.name} className="bg-white/10 rounded-xl py-3 px-1">
+              <div className="text-2xl mb-1">{t.emoji}</div>
+              <div className="text-white text-xs leading-tight">{t.name}</div>
+            </div>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+      </div>
+
+      <div className="w-full max-w-sm mb-8 space-y-2">
+        {['⏱ 約1〜2分で完了', '👆 タップするだけ・文字入力なし', '🆓 完全無料'].map(text => (
+          <div key={text} className="text-purple-200 text-sm">{text}</div>
+        ))}
+      </div>
+
+      <Link
+        href="/quiz"
+        className="w-full max-w-sm block text-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold text-xl py-5 px-8 rounded-2xl shadow-xl transition-all duration-200 active:scale-95"
+      >
+        診断スタート →
+      </Link>
+
+      <p className="text-purple-500 text-xs mt-6 text-center">
+        ※本診断はエンターテインメント目的のコンテンツです。<br />
+        特定の宗教・神社との関係はありません。
+      </p>
+    </main>
+  )
 }
