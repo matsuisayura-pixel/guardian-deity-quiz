@@ -1,26 +1,82 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0D0D1A;
+  --foreground: #F5EAE1;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-sans: var(--font-sans, 'Noto Sans JP', sans-serif);
+  --font-serif: var(--font-serif, 'Noto Serif JP', serif);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* スピリチュアルカラーパレット */
+  --color-mystic-900: #0D0D1A;
+  --color-mystic-800: #1A0A2E;
+  --color-mystic-700: #2D1A4A;
+  --color-mystic-600: #592E6B;
+  --color-mystic-400: #9B59B6;
+  --color-gold-400: #E4AD75;
+  --color-gold-300: #F0C88A;
+  --color-gold-600: #C07A35;
+  --color-cream: #F5EAE1;
+  --color-lavender: #D9D8DD;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* 星パーティクル */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes float-up {
+  0% { transform: translateY(0px); opacity: 0.6; }
+  100% { transform: translateY(-8px); opacity: 0.3; }
+}
+
+.star {
+  animation: twinkle 2s ease-in-out infinite;
+}
+.star-1 { animation-delay: 0s; }
+.star-2 { animation-delay: 0.5s; }
+.star-3 { animation-delay: 1.0s; }
+.star-4 { animation-delay: 1.5s; }
+.star-5 { animation-delay: 0.8s; }
+
+/* 質問スライドイン */
+@keyframes slideIn {
+  from { transform: translateX(24px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* 分析ローディングテキスト */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* ローディングバー */
+@keyframes loadBar {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+.load-bar {
+  animation: loadBar 2.4s ease-in-out forwards;
+}
+
+/* フォント */
+.font-serif {
+  font-family: var(--font-serif);
 }
