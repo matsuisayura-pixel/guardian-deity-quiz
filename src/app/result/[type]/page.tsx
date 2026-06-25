@@ -31,6 +31,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+const KANJI_MAP: Record<string, string> = {
+  amaterasu: '天', tsukuyomi: '月', susanoo: '嵐',
+  inari: '稲', ryujin: '龍', benzaiten: '弁',
+  ebisu: '恵', okuninushi: '国',
+}
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://example.com'
 
 export default async function ResultPage({ params }: Props) {
@@ -38,51 +44,63 @@ export default async function ResultPage({ params }: Props) {
   if (!isValidDeityType(type)) notFound()
 
   const content = DEITY_CONTENT[type]
+  const kanji = KANJI_MAP[type] ?? '神'
 
   return (
     <main
       className="min-h-screen flex flex-col items-center px-4 py-10"
-      style={{ background: 'linear-gradient(160deg, #0D0D1A 0%, #1A0A2E 50%, #0D0D1A 100%)' }}
+      style={{ background: 'linear-gradient(170deg, #0D0B08 0%, #1A1208 60%, #0D0B08 100%)' }}
     >
       <div className="w-full max-w-sm">
 
-        {/* ヘッダーラベル */}
-        <p className="text-center text-xs tracking-widest mb-5" style={{ color: '#E4AD75' }}>
-          ✦ 守護神様タイプ診断 結果 ✦
-        </p>
+        {/* 上部装飾 */}
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, #C4963C)' }} />
+          <span className="text-xs tracking-[0.3em]" style={{ color: '#C4963C' }}>診断結果</span>
+          <div className="h-px flex-1" style={{ background: 'linear-gradient(to left, transparent, #C4963C)' }} />
+        </div>
 
         {/* タイプカード */}
         <div
-          className="rounded-2xl p-6 mb-5 text-center"
+          className="mb-6 p-6 text-center"
           style={{
-            background: 'rgba(255,255,255,0.05)',
-            border: '1px solid rgba(228,173,117,0.25)',
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(196,150,60,0.3)',
           }}
         >
-          <div className="text-6xl mb-3">{content.emoji}</div>
+          {/* 漢字アイコン */}
+          <div className="flex justify-center mb-4">
+            <div
+              className="font-serif text-4xl font-bold w-16 h-16 flex items-center justify-center"
+              style={{
+                color: '#C4963C',
+                border: '1px solid rgba(196,150,60,0.5)',
+                background: 'rgba(196,150,60,0.06)',
+              }}
+            >
+              {kanji}
+            </div>
+          </div>
 
-          <p className="text-sm mb-1" style={{ color: '#C4B5C8' }}>あなたの守護神様は</p>
+          <p className="text-xs tracking-wider mb-1" style={{ color: '#A89880' }}>あなたの守護神様は</p>
 
-          <h1
-            className="font-serif text-2xl font-bold mb-2"
-            style={{ color: '#F5EAE1' }}
-          >
+          <h1 className="font-serif text-2xl font-bold tracking-wider mb-2" style={{ color: '#F0E6D2' }}>
             【{content.name}】
           </h1>
 
-          <p className="text-base font-bold mb-4" style={{ color: '#E4AD75' }}>
-            {content.catchCopy}
+          <p className="text-sm font-bold mb-5 tracking-wide" style={{ color: '#C4963C' }}>
+            ─ {content.catchCopy} ─
           </p>
 
           <div className="flex flex-wrap justify-center gap-2 mb-5">
             {content.attributes.map(attr => (
               <span
                 key={attr}
-                className="text-xs px-3 py-1 rounded-full"
+                className="text-xs px-3 py-1"
                 style={{
-                  background: 'rgba(89,46,107,0.5)',
-                  color: '#D9D8DD',
-                  border: '1px solid rgba(228,173,117,0.2)',
+                  color: '#A89880',
+                  border: '1px solid rgba(196,150,60,0.25)',
+                  background: 'rgba(196,150,60,0.05)',
                 }}
               >
                 {attr}
@@ -90,44 +108,48 @@ export default async function ResultPage({ params }: Props) {
             ))}
           </div>
 
-          <p
-            className="text-sm leading-relaxed whitespace-pre-line text-left"
-            style={{ color: '#C4B5C8' }}
-          >
+          <p className="text-sm leading-loose text-left whitespace-pre-line" style={{ color: '#A89880' }}>
             {content.shortMessage}
           </p>
         </div>
 
-        {/* LINE CTA（ファーストビュー内・最重要） */}
+        {/* LINE CTA */}
         <div
-          className="rounded-2xl p-5 mb-5"
+          className="p-5 mb-5"
           style={{
-            background: 'rgba(228,173,117,0.06)',
-            border: '1px solid rgba(228,173,117,0.2)',
+            border: '1px solid rgba(196,150,60,0.3)',
+            background: 'rgba(196,150,60,0.04)',
           }}
         >
-          <p className="font-serif text-base font-bold text-center mb-1" style={{ color: '#F5EAE1' }}>
-            🎁 守護神様からの詳細メッセージを
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <div className="h-px flex-1" style={{ background: 'rgba(196,150,60,0.2)' }} />
+            <span className="font-serif text-xs tracking-widest" style={{ color: '#C4963C' }}>御神託</span>
+            <div className="h-px flex-1" style={{ background: 'rgba(196,150,60,0.2)' }} />
+          </div>
+
+          <p className="font-serif text-sm text-center mt-3 mb-1 leading-relaxed" style={{ color: '#F0E6D2' }}>
+            守護神様からの詳しいメッセージを
           </p>
-          <p className="text-sm text-center mb-1" style={{ color: '#C4B5C8' }}>
-            LINEで受け取ってみませんか
+          <p className="text-xs text-center mb-4" style={{ color: '#A89880' }}>
+            LINEでお受け取りいただけます
           </p>
-          <p className="text-xs text-center mb-4" style={{ color: '#8B7B8B' }}>
-            ・登録後すぐにお届けします<br />
-            ・迷惑メッセージは一切送りません
-          </p>
+
           <LineCtaButton />
+
+          <p className="text-xs text-center mt-3" style={{ color: '#5A4A3A' }}>
+            登録後すぐにお届けします ・ 迷惑メッセージは送りません
+          </p>
         </div>
 
         {/* 社会的証明 */}
-        <p className="text-xs text-center mb-6" style={{ color: '#592E6B' }}>
-          ⭐ 累計18,394人が診断し、LINEでメッセージを受け取っています
+        <p className="text-xs text-center mb-6 tracking-wider" style={{ color: '#5A4A3A' }}>
+          ◆ 累計18,394人がLINEで詳細メッセージを受け取っています ◆
         </p>
 
-        {/* シェアボタン */}
-        <div className="mb-5">
-          <p className="text-xs text-center mb-3" style={{ color: '#8B7B8B' }}>
-            友達にシェアして、守護神様を比べてみませんか
+        {/* シェア */}
+        <div className="mb-6">
+          <p className="text-xs text-center mb-3" style={{ color: '#5A4A3A' }}>
+            ─ 結果をシェアする ─
           </p>
           <ShareButtons
             typeName={content.name}
@@ -136,16 +158,15 @@ export default async function ResultPage({ params }: Props) {
           />
         </div>
 
-        {/* もう一度 */}
         <a
           href="/"
-          className="block text-center text-sm underline mb-8"
-          style={{ color: '#592E6B' }}
+          className="block text-center text-xs mb-8"
+          style={{ color: '#5A4A3A' }}
         >
           ← もう一度診断する
         </a>
 
-        <p className="text-xs text-center" style={{ color: '#3D2D4A' }}>
+        <p className="text-xs text-center" style={{ color: '#3A2A1A' }}>
           ※本診断はエンターテインメント目的のコンテンツです。<br />
           特定の宗教・神社との関係はありません。
         </p>
