@@ -25,21 +25,15 @@ export function QuizEngine() {
 
   useEffect(() => {
     if (!isAnalyzing) return
-
     const stepInterval = setInterval(() => {
       setAnalyzeStep(prev => Math.min(prev + 1, ANALYSIS_STEPS.length - 1))
     }, 600)
-
     const loadInterval = setInterval(() => {
       setLoadPct(prev => Math.min(prev + 2, 100))
     }, 48)
-
     const redirect = setTimeout(() => {
-      if (resultTypeRef.current) {
-        router.push(`/result/${resultTypeRef.current}`)
-      }
+      if (resultTypeRef.current) router.push(`/result/${resultTypeRef.current}`)
     }, 2600)
-
     return () => {
       clearInterval(stepInterval)
       clearInterval(loadInterval)
@@ -53,9 +47,7 @@ export function QuizEngine() {
   function onSelect(scores: AttributeScore) {
     const next = [...answers, scores]
     setAnswers(next)
-
     if (currentQ === 0) trackEvent('InitiateCheckout')
-
     if (currentQ < QUIZ_QUESTIONS.length - 1) {
       setCurrentQ(currentQ + 1)
     } else {
@@ -77,13 +69,12 @@ export function QuizEngine() {
   if (isAnalyzing) {
     return (
       <div
-        className="min-h-screen flex flex-col items-center justify-center px-4"
+        className="min-h-screen flex flex-col items-center justify-center px-5"
         style={{ background: 'linear-gradient(170deg, #0D0B08 0%, #1A1208 60%, #0D0B08 100%)' }}
       >
         <div className="w-full max-w-sm text-center">
-
           <div
-            className="font-serif text-4xl font-bold w-16 h-16 flex items-center justify-center mx-auto mb-8"
+            className="font-serif text-4xl font-bold w-20 h-20 flex items-center justify-center mx-auto mb-8"
             style={{
               color: '#C4963C',
               border: '1px solid rgba(196,150,60,0.5)',
@@ -93,15 +84,13 @@ export function QuizEngine() {
           >
             神
           </div>
-
-          <p className="font-serif text-lg font-bold tracking-wider mb-2" style={{ color: '#F0E6D2' }}>
+          <p className="font-serif text-xl font-bold tracking-wider mb-3" style={{ color: '#F0E6D2' }}>
             守護神様を鑑定中
           </p>
-          <p className="text-sm mb-8" style={{ color: '#A89880' }} key={analyzeStep}>
+          <p className="text-base mb-10" style={{ color: '#A89880' }} key={analyzeStep}>
             {ANALYSIS_STEPS[analyzeStep]}
           </p>
-
-          <div className="w-full rounded-none h-px mb-1" style={{ background: '#2A1F10' }}>
+          <div className="w-full h-px mb-4" style={{ background: '#2A1F10' }}>
             <div
               className="h-px transition-all duration-100"
               style={{
@@ -110,7 +99,7 @@ export function QuizEngine() {
               }}
             />
           </div>
-          <p className="text-xs" style={{ color: '#3A2A1A' }}>しばらくお待ちください</p>
+          <p className="text-sm" style={{ color: '#3A2A1A' }}>しばらくお待ちください</p>
         </div>
       </div>
     )
@@ -118,20 +107,22 @@ export function QuizEngine() {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center px-4 py-8"
+      className="min-h-screen flex flex-col items-center justify-center px-5 py-8"
       style={{ background: 'linear-gradient(170deg, #0D0B08 0%, #1A1208 60%, #0D0B08 100%)' }}
     >
       <div className="w-full max-w-md">
 
         {/* 進捗 */}
-        <div className="mb-6">
-          <div className="flex justify-between text-xs mb-2">
-            <span style={{ color: '#C4963C' }}>第{currentQ + 1}問 / 全{QUIZ_QUESTIONS.length}問</span>
-            <span style={{ color: '#5A4A3A' }}>{progress}%</span>
+        <div className="mb-8">
+          <div className="flex justify-between mb-3">
+            <span className="text-base" style={{ color: '#C4963C' }}>
+              第{currentQ + 1}問 / 全{QUIZ_QUESTIONS.length}問
+            </span>
+            <span className="text-base" style={{ color: '#5A4A3A' }}>{progress}%</span>
           </div>
-          <div className="w-full h-px" style={{ background: '#2A1F10' }}>
+          <div className="w-full h-0.5" style={{ background: '#2A1F10' }}>
             <div
-              className="h-px transition-all duration-500"
+              className="h-0.5 transition-all duration-500"
               style={{
                 width: `${progress}%`,
                 background: 'linear-gradient(90deg, #8B1A1A, #C4963C)',
@@ -142,14 +133,17 @@ export function QuizEngine() {
 
         {/* 質問カード */}
         <div
-          className="p-6 mb-4 slide-in"
+          className="p-6 mb-5 slide-in"
           key={currentQ}
           style={{
             background: 'rgba(255,255,255,0.03)',
             border: '1px solid rgba(196,150,60,0.2)',
           }}
         >
-          <p className="font-serif text-lg font-bold leading-relaxed mb-8 text-center" style={{ color: '#F0E6D2' }}>
+          <p
+            className="font-serif text-xl font-bold leading-relaxed mb-8 text-center"
+            style={{ color: '#F0E6D2' }}
+          >
             {question.text}
           </p>
 
@@ -158,11 +152,12 @@ export function QuizEngine() {
               <button
                 key={i}
                 onClick={() => onSelect(option.scores)}
-                className="w-full text-left px-5 py-4 text-sm leading-relaxed transition-all duration-150"
+                className="w-full text-left px-5 py-5 text-base leading-relaxed transition-all duration-150"
                 style={{
                   background: 'rgba(255,255,255,0.03)',
                   border: '1px solid rgba(196,150,60,0.15)',
                   color: '#A89880',
+                  minHeight: '56px',
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLButtonElement
@@ -186,14 +181,14 @@ export function QuizEngine() {
         {currentQ > 0 && (
           <button
             onClick={onBack}
-            className="text-xs mx-auto block mt-2"
-            style={{ color: '#3A2A1A' }}
+            className="text-sm mx-auto block mt-1"
+            style={{ color: '#5A4A3A' }}
           >
             ← 前の質問に戻る
           </button>
         )}
 
-        <p className="text-xs text-center mt-8" style={{ color: '#3A2A1A' }}>
+        <p className="text-sm text-center mt-10" style={{ color: '#3A2A1A' }}>
           ※本診断はエンターテインメント目的のコンテンツです
         </p>
       </div>

@@ -48,7 +48,7 @@ export default async function ResultPage({ params }: Props) {
 
   return (
     <main
-      className="min-h-screen flex flex-col items-center px-4 py-10"
+      className="min-h-screen flex flex-col items-center px-5 py-10"
       style={{ background: 'linear-gradient(170deg, #0D0B08 0%, #1A1208 60%, #0D0B08 100%)' }}
     >
       <div className="w-full max-w-sm">
@@ -56,7 +56,7 @@ export default async function ResultPage({ params }: Props) {
         {/* 上部装飾 */}
         <div className="flex items-center justify-center gap-3 mb-8">
           <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, #C4963C)' }} />
-          <span className="text-xs tracking-[0.3em]" style={{ color: '#C4963C' }}>診断結果</span>
+          <span className="text-sm tracking-widest" style={{ color: '#C4963C' }}>診断結果</span>
           <div className="h-px flex-1" style={{ background: 'linear-gradient(to left, transparent, #C4963C)' }} />
         </div>
 
@@ -68,10 +68,9 @@ export default async function ResultPage({ params }: Props) {
             border: '1px solid rgba(196,150,60,0.3)',
           }}
         >
-          {/* 漢字アイコン */}
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-5">
             <div
-              className="font-serif text-4xl font-bold w-16 h-16 flex items-center justify-center"
+              className="font-serif text-5xl font-bold w-20 h-20 flex items-center justify-center"
               style={{
                 color: '#C4963C',
                 border: '1px solid rgba(196,150,60,0.5)',
@@ -82,21 +81,21 @@ export default async function ResultPage({ params }: Props) {
             </div>
           </div>
 
-          <p className="text-xs tracking-wider mb-1" style={{ color: '#A89880' }}>あなたの守護神様は</p>
+          <p className="text-base mb-2" style={{ color: '#A89880' }}>あなたの守護神様は</p>
 
-          <h1 className="font-serif text-2xl font-bold tracking-wider mb-2" style={{ color: '#F0E6D2' }}>
+          <h1 className="font-serif text-3xl font-bold tracking-wider mb-3" style={{ color: '#F0E6D2' }}>
             【{content.name}】
           </h1>
 
-          <p className="text-sm font-bold mb-5 tracking-wide" style={{ color: '#C4963C' }}>
+          <p className="text-base font-bold mb-6 tracking-wide" style={{ color: '#C4963C' }}>
             ─ {content.catchCopy} ─
           </p>
 
-          <div className="flex flex-wrap justify-center gap-2 mb-5">
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
             {content.attributes.map(attr => (
               <span
                 key={attr}
-                className="text-xs px-3 py-1"
+                className="text-sm px-4 py-1"
                 style={{
                   color: '#A89880',
                   border: '1px solid rgba(196,150,60,0.25)',
@@ -108,47 +107,47 @@ export default async function ResultPage({ params }: Props) {
             ))}
           </div>
 
-          <p className="text-sm leading-loose text-left whitespace-pre-line" style={{ color: '#A89880' }}>
+          <p className="text-base leading-loose text-left whitespace-pre-line" style={{ color: '#A89880' }}>
             {content.shortMessage}
           </p>
         </div>
 
         {/* LINE CTA */}
         <div
-          className="p-5 mb-5"
+          className="p-6 mb-6"
           style={{
             border: '1px solid rgba(196,150,60,0.3)',
             background: 'rgba(196,150,60,0.04)',
           }}
         >
-          <div className="flex items-center justify-center gap-2 mb-1">
+          <div className="flex items-center justify-center gap-3 mb-5">
             <div className="h-px flex-1" style={{ background: 'rgba(196,150,60,0.2)' }} />
-            <span className="font-serif text-xs tracking-widest" style={{ color: '#C4963C' }}>御神託</span>
+            <span className="font-serif text-base tracking-widest" style={{ color: '#C4963C' }}>御神託</span>
             <div className="h-px flex-1" style={{ background: 'rgba(196,150,60,0.2)' }} />
           </div>
 
-          <p className="font-serif text-sm text-center mt-3 mb-1 leading-relaxed" style={{ color: '#F0E6D2' }}>
+          <p className="font-serif text-lg text-center mb-2 leading-relaxed" style={{ color: '#F0E6D2' }}>
             守護神様からの詳しいメッセージを
           </p>
-          <p className="text-xs text-center mb-4" style={{ color: '#A89880' }}>
+          <p className="text-base text-center mb-5" style={{ color: '#A89880' }}>
             LINEでお受け取りいただけます
           </p>
 
           <LineCtaButton />
 
-          <p className="text-xs text-center mt-3" style={{ color: '#5A4A3A' }}>
+          <p className="text-sm text-center mt-4" style={{ color: '#5A4A3A' }}>
             登録後すぐにお届けします ・ 迷惑メッセージは送りません
           </p>
         </div>
 
         {/* 社会的証明 */}
-        <p className="text-xs text-center mb-6 tracking-wider" style={{ color: '#5A4A3A' }}>
+        <p className="text-sm text-center mb-8 tracking-wider" style={{ color: '#5A4A3A' }}>
           ◆ 累計18,394人がLINEで詳細メッセージを受け取っています ◆
         </p>
 
         {/* シェア */}
-        <div className="mb-6">
-          <p className="text-xs text-center mb-3" style={{ color: '#5A4A3A' }}>
+        <div className="mb-8">
+          <p className="text-sm text-center mb-4" style={{ color: '#5A4A3A' }}>
             ─ 結果をシェアする ─
           </p>
           <ShareButtons
@@ -160,13 +159,13 @@ export default async function ResultPage({ params }: Props) {
 
         <a
           href="/"
-          className="block text-center text-xs mb-8"
+          className="block text-center text-sm mb-10"
           style={{ color: '#5A4A3A' }}
         >
           ← もう一度診断する
         </a>
 
-        <p className="text-xs text-center" style={{ color: '#3A2A1A' }}>
+        <p className="text-sm text-center" style={{ color: '#3A2A1A' }}>
           ※本診断はエンターテインメント目的のコンテンツです。<br />
           特定の宗教・神社との関係はありません。
         </p>
